@@ -1,0 +1,10 @@
+sudo: required
+language: generic
+services:
+  - docker
+before_install:
+  - docker build -t betelgeitze/docker-react -f Dockerfile.dev .
+
+script:
+  #- docker run betelgeitze/docker-react npm run test -- --coverage # Docker command that executes the tests. Coverage is needed to finish the execution after it is done
+  - docker run -e CI=true betelgeitze/docker-react npm run test

@@ -8,3 +8,15 @@ before_install:
 script:
   #- docker run betelgeitze/docker-react npm run test -- --coverage # Docker command that executes the tests. Coverage is needed to finish the execution after it is done
   - docker run -e CI=true betelgeitze/docker-react npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1" # check the url of your environment in aws
+  app: "docker-react" # application name in aws
+  env: "Dockerreact-env" # environment name in aws
+  bucket_name: "elasticbeanstalk-us-east-1-771077539328" # name of the S3 instance which was deployed with your environment
+  bucket_path: "docker-react" # same name as application in aws
+  on:
+    branch: master # only attempts to deploy the application when any code is pushed to master branch in GitHub
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY" # you need quotes
